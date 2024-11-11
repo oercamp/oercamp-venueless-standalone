@@ -4,34 +4,26 @@ services:
     container_name: venueless
     restart: always
     ports:
-      - "9007:80"
+      - "8002:80"
     volumes:
       - ./.docker/volumes/conf:/etc/venueless
+      - ./.docker/volumes/data:/data
     depends_on:
       - db
-    networks:
-      - stack_network
+      - redis
   db:
     image: postgres
-    container_name: db
+    container_name: venueless-db
     restart: always
     ports:
       - 5433:5432
     volumes:
       - ./.docker/volumes/postgres:/var/lib/postgresql/data
     environment:
-      - POSTGRES_DB=venueless
-      - POSTGRES_USER=venueless
-      - POSTGRES_PASSWORD=venueless
-    networks:
-      - stack_network
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
   redis:
     image: redis:latest
-    container_name: redis
+    container_name: venueless-redis
     restart: always
-    networks:
-      - stack_network
-
-networks:
-  stack_network:
-    external: false
