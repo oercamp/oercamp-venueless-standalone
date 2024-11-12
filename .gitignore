@@ -4,5 +4,4 @@ atlassian-ide-plugin.xml
 
 .docker/volumes/postgres
 .docker/volumes/data
-.docker/volumes/venueless-server
 .env
